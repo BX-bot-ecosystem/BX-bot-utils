@@ -1,7 +1,6 @@
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from datetime import datetime
-import json
 from dotenv import load_dotenv
 import os
 from . import config
