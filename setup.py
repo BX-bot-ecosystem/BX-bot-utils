@@ -8,7 +8,7 @@ with open("requirements.txt", 'r') as fh:
 print(requirements)
 
 setup(
-    name="BX-utils",
+    name="bx-utils",
     version='0.1',
     author="BX-bot-ecosystem",
     author_email="something@something.something",
