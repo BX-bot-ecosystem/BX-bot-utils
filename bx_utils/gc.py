@@ -3,21 +3,24 @@ from googleapiclient.discovery import build
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import json
 from . import config
 import datetime
 
 load_dotenv()
 EVENT_CALENDAR_ID = os.getenv("EVENT_CALENDAR_ID")
 DEADLINE_CALENDAR_ID = os.getenv("DEADLINE_CALENDAR_ID")
+private_key = os.getenv("PRIVATE_KEY")
 # The scopes define the level of access your bot will have to the shared calendar.
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
-# Path to the service account key JSON file.
-SERVICE_ACCOUNT_KEY_PATH = '../service_account.json'
 def get_calendar_service():
     # Load the service account credentials from the JSON key file.
-    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_KEY_PATH, scopes=SCOPES)
-
+    with open(config.ROOT + '/../service_account.json') as f:
+        account_info = json.load(f)
+        account_info["private_key"] = private_key
+        credentials = Credentials.from_service_account_info(account_info)
+        credentials.with_scopes(SCOPES)
     # Create the Calendar API client using the service account credentials.
     service = build("calendar", "v3", credentials=credentials)
     return service
