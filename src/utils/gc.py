@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 from dotenv import load_dotenv
 import os
-from utils import config
+from . import config
 import datetime
 
 load_dotenv()

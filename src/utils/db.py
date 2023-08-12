@@ -1,4 +1,4 @@
-from utils import config
+from . import config
 
 r = config.r
 
