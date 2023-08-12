@@ -4,7 +4,8 @@ with open("README.md", "r") as fh:
     description = fh.read()
 
 with open("requirements.txt", 'r') as fh:
-    requirements = fh.readlines()
+    requirements = [l.strip() for l in fh.readlines()]
+print(requirements)
 
 setup(
     name="BX-utils",
