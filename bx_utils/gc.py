@@ -10,17 +10,26 @@ import datetime
 load_dotenv()
 EVENT_CALENDAR_ID = os.getenv("EVENT_CALENDAR_ID")
 DEADLINE_CALENDAR_ID = os.getenv("DEADLINE_CALENDAR_ID")
-private_key = os.getenv("PRIVATE_KEY")
 # The scopes define the level of access your bot will have to the shared calendar.
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 def get_calendar_service():
     # Load the service account credentials from the JSON key file.
-    with open(config.ROOT + '/../service_account.json') as f:
-        account_info = json.load(f)
-        account_info["private_key"] = private_key
-        credentials = Credentials.from_service_account_info(account_info)
-        credentials.with_scopes(SCOPES)
+    account_info = {
+        "type": "service_account",
+        "project_id": "bx-telegram",
+        "private_key_id": os.getenv("PRIVATE_KEY_ID"),
+        "private_key": os.getenv("PRIVATE_KEY"),
+        "client_email": os.getenv("CLIENT_EMAIL"),
+        "client_id": os.getenv("CLIENT_ID"),
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": os.getenv("CLIENT_X509_CERT_URL"),
+        "universe_domain": "googleapis.com"
+        }
+    credentials = Credentials.from_service_account_info(account_info)
+    credentials.with_scopes(SCOPES)
     # Create the Calendar API client using the service account credentials.
     service = build("calendar", "v3", credentials=credentials)
     return service
