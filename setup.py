@@ -9,7 +9,7 @@ print(requirements)
 
 setup(
     name="bx-utils",
-    version='0.9',
+    version='0.11',
     author="BX-bot-ecosystem",
     author_email="something@something.something",
     packages=find_packages(),

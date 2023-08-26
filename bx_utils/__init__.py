@@ -1,6 +1,6 @@
 from . import config
 from . import db
 from . import gc
-from .version_check import Vcheck
+from . import telegram
 from .logging import logger
 from . import passwords
