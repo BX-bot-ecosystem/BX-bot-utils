@@ -178,6 +178,12 @@ def change_committee_access(committee_name, new_rights):
     commmittee_key = 'access:' + committee_name
     r.hset(commmittee_key, mapping=new_rights)
 
+def extra_committee_info(committee_name, key, value):
+    """
+    Allows committees to upload a new key value pair to a dict in the database specific to their committee
+    """
+    committee_key = 'info:' + committee_name
+    r.hset(committee_key, key, value)
 
 if __name__ == '__main__':
     pass
