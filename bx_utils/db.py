@@ -185,5 +185,13 @@ def extra_committee_info(committee_name, key, value):
     committee_key = 'info:' + committee_name
     r.hset(committee_key, key, value)
 
+def get_committee_info(committee_name):
+    """
+    Allows committees to retrieve the info that they have uploaded
+    """
+    committee_key = 'info:' + committee_name
+    info = r.hgetall(committee_key)
+    return info
+
 if __name__ == '__main__':
     pass
