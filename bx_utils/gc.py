@@ -29,7 +29,7 @@ def get_calendar_service():
         "universe_domain": "googleapis.com"
         }
     credentials = Credentials.from_service_account_info(account_info)
-    credentials.with_scopes(SCOPES)
+    credentials = credentials.with_scopes(SCOPES)
     # Create the Calendar API client using the service account credentials.
     service = build("calendar", "v3", credentials=credentials)
     return service
