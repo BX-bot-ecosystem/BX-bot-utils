@@ -62,8 +62,8 @@ def upload_image_to_committee(committee_name, image_path):
     upload_image(image_path, folder_id)
     service = get_drive_service()
     service.files().delete(fileId=old_file["id"]).execute()
+    print('Old file deleted')
     os.remove(image_path)
-
 
 def create_folder(name, parent_id):
     service = get_drive_service()
@@ -130,7 +130,6 @@ def download_committee_file(committee_name, file_name, file_path):
             print(f"Download {int(status.progress() * 100)}%")
 
         print(f"Downloaded file to {file_path}")
-
 
 
 
