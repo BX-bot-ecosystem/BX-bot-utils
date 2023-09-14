@@ -1,7 +1,8 @@
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from dotenv import load_dotenv
-from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
+from io import FileIO
 import os
 
 load_dotenv()
@@ -54,6 +55,11 @@ def upload_image(image_path, folder_id):
 
     print(f"Image uploaded. File ID: {uploaded_file['id']}")
 
+def upload_image_to_committee(committee_name, image_path):
+    folder_id = get_committee_folder(committee_name)["id"]
+    upload_image(image_path, folder_id)
+    os.remove(image_path)
+
 def create_folder(name, parent_id):
     service = get_drive_service()
 
@@ -69,6 +75,11 @@ def create_folder(name, parent_id):
     ).execute()
 
     print(f"Folder '{name}' created. Folder ID: {created_folder['id']}")
+
+def get_committee_folder(committee_name):
+    folders = get_folders(os.getenv("DRIVE_FOLDER"))
+    folder = [folder for folder in folders if folder["name"]==committee_name]
+    return folder[0]
 
 def create_committee_folder(committee_name):
     create_folder(committee_name, os.getenv("DRIVE_FOLDER"))
@@ -99,9 +110,25 @@ def get_committee_files(committee_name):
     if not committee_name in committee_folders.keys():
         return []
     return get_files(committee_folders[committee_name])
-def download_committee_files(committee_name, file_name, file_path):
+def download_committee_file(committee_name, file_name, file_path):
+    service = get_drive_service()
     files = get_committee_files(committee_name)
     file_to_download = [file for file in files if file["name"] == file_name][0]
-    file_to_download.
+    file_id = file_to_download["id"]
+    request = service.files().get_media(fileId=file_id, alt='media')
+
+    with open(file_path, 'wb') as file_stream:
+        downloader = MediaIoBaseDownload(file_stream, request)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+            print(f"Download {int(status.progress() * 100)}%")
+
+        print(f"Downloaded file to {file_path}")
+
+from pathlib import Path
+ROOT = str(Path(__file__).parent.parent)
+download_committee_file('.9 Bar', 'image.jpg',ROOT + './image.jpg' )
+
 
 
