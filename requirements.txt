@@ -3,6 +3,7 @@ python-telegram-bot-calendar
 gspread
 python-dotenv
 passlib
+bcrypt
 redis
 psycopg2
 google-api-python-client
