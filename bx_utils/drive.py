@@ -126,9 +126,7 @@ def download_committee_file(committee_name, file_name, file_path):
 
         print(f"Downloaded file to {file_path}")
 
-from pathlib import Path
-ROOT = str(Path(__file__).parent.parent)
-download_committee_file('.9 Bar', 'image.jpg',ROOT + './image.jpg' )
+
 
 
 
