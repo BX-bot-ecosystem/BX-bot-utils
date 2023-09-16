@@ -150,7 +150,7 @@ def add_access_rights(user, committee_name, committee_command):
     updated_access = list_to_db(access_list)
     committee_key = 'access:' + committee_name
     committee_access = r.hgetall(committee_key)
-    role = 'Prez' if committee_access == [] else 'Admin'
+    role = 'Prez' if committee_access == {} else 'Admin'
     p = r.pipeline()
     p.hset(user_to_key(user), key="rights", value=updated_access)
     p.hset(committee_key, key=user.id, value=role)
