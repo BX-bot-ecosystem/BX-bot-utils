@@ -190,7 +190,7 @@ def delete_committee_info(committee_name, key):
     Allows committees to delete previously uploaded key value pairs
     """
     committee_key = 'info:' + committee_name
-    r.hdel(committee_key, [key])
+    r.hdel(committee_key, key)
 
 def get_committee_info(committee_name):
     """
