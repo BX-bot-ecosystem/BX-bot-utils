@@ -185,6 +185,13 @@ def extra_committee_info(committee_name, key, value):
     committee_key = 'info:' + committee_name
     r.hset(committee_key, key, value)
 
+def delete_committee_info(committee_name, key):
+    """
+    Allows committees to delete previously uploaded key value pairs
+    """
+    committee_key = 'info:' + committee_name
+    r.hdel(committee_key, [key])
+
 def get_committee_info(committee_name):
     """
     Allows committees to retrieve the info that they have uploaded
